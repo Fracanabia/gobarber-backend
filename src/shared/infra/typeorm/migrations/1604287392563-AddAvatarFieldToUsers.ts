@@ -9,7 +9,7 @@ export default class AddAvatarFieldToUsers1604287392563
         name: 'avatar',
         type: 'varchar',
         isNullable: true,
-      }),
+      })
     )
   }
 
