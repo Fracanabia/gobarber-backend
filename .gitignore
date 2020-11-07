@@ -1,6 +1,7 @@
 .idea/
 .vscode/
 node_modules/
+coverage/
 buid/
 tmp/*
 !tmp/.gitkeep
