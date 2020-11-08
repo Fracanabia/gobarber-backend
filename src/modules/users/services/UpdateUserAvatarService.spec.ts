@@ -3,16 +3,20 @@ import FakeStorageProvider from '@shared/container/providers/StorageProvider/fak
 import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService'
 import AppError from '@shared/errors/AppError'
 
-describe('UpdateUserAvatar', () => {
-  it('should be able to update avatar', async () => {
-    const fakeUsersRepository = new FakeUsersRepository()
+let fakeUsersRepository: FakeUsersRepository
+let fakeStorageProvider: FakeStorageProvider
+let updateUserAvatar: UpdateUserAvatarService
 
-    const fakeStorageProvider = new FakeStorageProvider()
-    const updateUserAvatar = new UpdateUserAvatarService(
+describe('UpdateUserAvatar', () => {
+  beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepository()
+    fakeStorageProvider = new FakeStorageProvider()
+    updateUserAvatar = new UpdateUserAvatarService(
       fakeUsersRepository,
       fakeStorageProvider
     )
-
+  })
+  it('should be able to update avatar', async () => {
     const user = await fakeUsersRepository.create({
       name: 'teste',
       email: 'teste@teste.com',
@@ -28,14 +32,6 @@ describe('UpdateUserAvatar', () => {
   })
 
   it('should be able to update avatar from non existing user', async () => {
-    const fakeUsersRepository = new FakeUsersRepository()
-
-    const fakeStorageProvider = new FakeStorageProvider()
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUsersRepository,
-      fakeStorageProvider
-    )
-
     await expect(
       updateUserAvatar.execute({
         user_id: 'no-exists',
@@ -45,15 +41,8 @@ describe('UpdateUserAvatar', () => {
   })
 
   it('should delete old avatar when updating new one', async () => {
-    const fakeUsersRepository = new FakeUsersRepository()
-    const fakeStorageProvider = new FakeStorageProvider()
-
     const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile')
 
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUsersRepository,
-      fakeStorageProvider
-    )
     const user = await fakeUsersRepository.create({
       name: 'teste',
       email: 'teste@teste.com',
