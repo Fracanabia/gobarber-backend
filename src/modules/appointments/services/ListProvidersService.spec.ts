@@ -1,10 +1,10 @@
-import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository'
 import ListProvidersService from '@modules/appointments/services/ListProvidersService'
+import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository'
 
 let fakeUsersRepository: FakeUsersRepository
 let listProvidersService: ListProvidersService
 
-describe('UpdateUserProfile', () => {
+describe('ListProviders', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository()
     listProvidersService = new ListProvidersService(fakeUsersRepository)

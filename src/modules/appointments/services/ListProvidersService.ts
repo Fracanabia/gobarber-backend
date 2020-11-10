@@ -1,11 +1,10 @@
 import User from '@modules/users/infra/typeorm/entities/User'
 import IUsersRepository from '@modules/users/repositories/IUsersRepository'
-import { injectable, inject } from 'tsyringe'
+import { inject, injectable } from 'tsyringe'
 
 interface IRequest {
   user_id: string
 }
-
 @injectable()
 class ListProvidersService {
   constructor(
