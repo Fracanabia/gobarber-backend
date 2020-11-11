@@ -5,6 +5,7 @@
   "username": "postgres",
   "password": "xkw123",
   "database": "gobarber",
+  "logging": true,
   "entities": [
     "./src/modules/**/infra/typeorm/entities/*.ts"
   ],
