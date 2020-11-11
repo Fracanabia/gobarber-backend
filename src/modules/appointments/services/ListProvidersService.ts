@@ -1,5 +1,6 @@
 import User from '@modules/users/infra/typeorm/entities/User'
 import IUsersRepository from '@modules/users/repositories/IUsersRepository'
+import 'reflect-metadata' // se não colocar buga os testes, é uma bosta mesmo
 import { inject, injectable } from 'tsyringe'
 
 interface IRequest {

@@ -1,19 +1,18 @@
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO'
 import IFindAllInDayFromProviderDTO from '@modules/appointments/dtos/IFindAllInDayFromProviderDTO'
 import IFindAllInMonthFromProviderDTO from '@modules/appointments/dtos/IFindAllInMonthFromProviderDTO'
-import Appointement from '@modules/appointments/infra/typeorm/entities/Appointment'
+import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment'
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository'
 import { getDate, getMonth, getYear, isEqual } from 'date-fns'
 import { uuid } from 'uuidv4'
 
 class AppointmentsRepository implements IAppointmentsRepository {
-  private appointments: Appointement[] = []
+  private appointments: Appointment[] = []
 
-  public async findByDate(date: Date): Promise<Appointement | undefined> {
+  public async findByDate(date: Date): Promise<Appointment | undefined> {
     const findAppointment = this.appointments.find(appointment =>
       isEqual(appointment.date, date)
     )
-
     return findAppointment
   }
 
@@ -21,7 +20,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     provider_id,
     year,
     month,
-  }: IFindAllInMonthFromProviderDTO): Promise<Appointement[]> {
+  }: IFindAllInMonthFromProviderDTO): Promise<Appointment[]> {
     const appointments = this.appointments.filter(
       appointment =>
         appointment.provider_id === provider_id &&
@@ -37,7 +36,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     year,
     month,
     day,
-  }: IFindAllInDayFromProviderDTO): Promise<Appointement[]> {
+  }: IFindAllInDayFromProviderDTO): Promise<Appointment[]> {
     const appointments = this.appointments.filter(
       appointment =>
         appointment.provider_id === provider_id &&
@@ -51,11 +50,12 @@ class AppointmentsRepository implements IAppointmentsRepository {
 
   public async create({
     provider_id,
+    user_id,
     date,
-  }: ICreateAppointmentDTO): Promise<Appointement> {
-    const appointment = new Appointement()
+  }: ICreateAppointmentDTO): Promise<Appointment> {
+    const appointment = new Appointment()
 
-    Object.assign(appointment, { id: uuid(), date, provider_id })
+    Object.assign(appointment, { id: uuid(), date, provider_id, user_id })
 
     this.appointments.push(appointment)
 
